@@ -1,6 +1,6 @@
 {
   "name": "sharp-gif-es6",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "description": "ES6 module fork of sharp-gif by ssnangua. Modernized for ES6 environments and import/export usage.",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -29,7 +29,8 @@
     "url": "https://github.com/tatitooo/sharp-gif-es6"
   },
   "files": [
-    "index.js",
+    "index.cjs",
+    "index.mjs",
     "index.d.ts",
     "README.md",
     "LICENSE"
