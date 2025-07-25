@@ -1,32 +1,35 @@
-**Note:** you can try [sharp-gif2](https://www.npmjs.com/package/sharp-gif2) first, it is base on [gifenc](https://www.npmjs.com/package/gifenc), has faster encoding speed.
+# sharp-gif-es6
+
+> **This is an ES6 module fork of [sharp-gif](https://www.npmjs.com/package/sharp-gif) by ssnangua. Modernized for ES6 environments and import/export usage.**
+> 
+> Original author: ssnangua ([repo](https://github.com/ssnangua/sharp-gif))
+> 
+> This fork maintained by Tatitooo.
 
 ---
 
-# sharp-gif
-
-Generate animated GIF/WebP for [sharp](https://www.npmjs.com/package/sharp) base on [gif-encoder](https://www.npmjs.com/package/gif-encoder).
+Generate animated GIF/WebP for [sharp](https://www.npmjs.com/package/sharp) based on [gif-encoder](https://www.npmjs.com/package/gif-encoder).
 
 ![](1.gif) + ![](2.gif) + ![](3.gif) = ![](output/concat.gif)
 
 ## Install
 
 ```bash
-npm install sharp-gif
+npm install sharp-gif-es6
 ```
 
-## Usage
+## Usage (ES6 Modules)
 
 ### Generate animated GIF
 
 ```js
-const fs = require("fs");
-const sharp = require("sharp");
-const GIF = require("sharp-gif");
+import fs from "fs";
+import sharp from "sharp";
+import { createGif } from "sharp-gif-es6";
 
 (async () => {
   // Simple use case
-  const image = await GIF
-    .createGif()
+  const image = await createGif()
     .addFrame([
       sharp("./frames/0000.png"),
       sharp("./frames/0001.png"),
@@ -38,7 +41,7 @@ const GIF = require("sharp-gif");
   image.toFile("./frames.webp");
 
   // Options
-  const gif = GIF.createGif({
+  const gif = createGif({
     // GifEncoder constructor options
     gifEncoderOptions: { highWaterMark: 64 },
     // Sharp constructor options
@@ -65,12 +68,11 @@ const GIF = require("sharp-gif");
   });
   gif.addFrame(sharp("./1.png"));
   gif.addFrame(sharp("./2.png"));
-  const image = await gif.toSharp();
-  image.toFile("./frames.gif");
+  const image2 = await gif.toSharp();
+  image2.toFile("./frames.gif");
 
   // Trace encoding progress
-  const image = await GIF
-    .createGif()
+  const image3 = await createGif()
     .addFrame(
       fs.readdirSync("./frames")
         .map((file) => sharp(`./frames/${file}`))
@@ -78,28 +80,27 @@ const GIF = require("sharp-gif");
     .toSharp(({ total, encoded }) => {
       console.log(`${encoded}/${total}`);
     });
-  image.toFile("./frames.gif");
+  image3.toFile("./frames.gif");
 
   // You can even concat animated GIFs
-  const image = await GIF
-    .createGif({ transparent: "#FFFFFF", })
+  const image4 = await createGif({ transparent: "#FFFFFF", })
     .addFrame([
       sharp("./1.gif", { animated: true }),
       sharp("./2.gif", { animated: true }),
     ])
     .toSharp();
-  image.toFile("./concat.gif");
+  image4.toFile("./concat.gif");
 })();
 ```
 
 ### Processing GIF frames
 
 ```js
-const sharp = require("sharp");
-const GIF = require("sharp-gif");
+import sharp from "sharp";
+import { readGif } from "sharp-gif-es6";
 
 (async () => {
-  const reader = GIF.readGif(sharp("./2.gif", { animated: true }));
+  const reader = readGif(sharp("./2.gif", { animated: true }));
   const frames = await reader.toFrames();
   frames.forEach((frame, index) => {
     // You can process each frame here
@@ -194,3 +195,7 @@ A shortcut to create a Gif with the cutted frames, equal to:
 ### 0.1.5
 
 - Fix: Resize bug.
+
+## License
+
+MIT. Copyright (c) ssnangua and contributors.
