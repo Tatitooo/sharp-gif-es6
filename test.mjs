@@ -1,6 +1,6 @@
 import fs from "fs";
 import sharp from "sharp";
-import { createGif, readGif } from "./index.js";
+import { createGif, readGif } from "./index.mjs";
 
 if (!fs.existsSync("./output")) fs.mkdirSync("./output");
 

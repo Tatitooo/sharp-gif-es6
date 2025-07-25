@@ -115,6 +115,35 @@ import { readGif } from "sharp-gif-es6";
 })();
 ```
 
+## Usage (CommonJS)
+
+This package also supports CommonJS usage:
+
+```js
+const fs = require("fs");
+const sharp = require("sharp");
+const { createGif, readGif } = require("sharp-gif-es6");
+
+(async () => {
+  // Simple use case
+  const image = await createGif()
+    .addFrame([
+      sharp("./frames/0000.png"),
+      sharp("./frames/0001.png"),
+      sharp("./frames/0002.png"),
+    ])
+    .toSharp();
+  image.toFile("./frames.gif");
+
+  // Processing GIF frames
+  const reader = readGif(sharp("./2.gif", { animated: true }));
+  const frames = await reader.toFrames();
+  frames.forEach((frame, index) => {
+    frame.toFile(`./output/${("000" + index).substr(-4)}.png`);
+  });
+})();
+```
+
 ## API
 
 ### `GIF.createGif(options?: Object): Gif`
