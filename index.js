@@ -1,5 +1,5 @@
-const sharp = require("sharp");
-const GifEncoder = require("gif-encoder");
+import sharp from "sharp";
+import GifEncoder from "gif-encoder";
 
 class GifReader {
   constructor(image) {
@@ -168,7 +168,5 @@ class Gif {
   }
 }
 
-module.exports = {
-  createGif: (options = {}) => new Gif(options),
-  readGif: (image) => new GifReader(image),
-};
+export const createGif = (options = {}) => new Gif(options);
+export const readGif = (image) => new GifReader(image);

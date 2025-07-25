@@ -1,11 +1,11 @@
-const fs = require("fs");
-const sharp = require("sharp");
-const GIF = require("./index");
+import fs from "fs";
+import sharp from "sharp";
+import { createGif, readGif } from "./index.js";
 
 if (!fs.existsSync("./output")) fs.mkdirSync("./output");
 
 async function simpleUseCase() {
-  const image = await GIF.createGif()
+  const image = await createGif()
     .addFrame([
       sharp("./frames/0000.png"),
       sharp("./frames/0001.png"),
@@ -17,7 +17,7 @@ async function simpleUseCase() {
 
 async function traceEncodingProgress() {
   const now = Date.now();
-  const image = await GIF.createGif({ delay: 50 })
+  const image = await createGif({ delay: 50 })
     .addFrame(
       fs.readdirSync("./frames").map((file) => sharp(`./frames/${file}`))
     )
@@ -30,7 +30,7 @@ async function traceEncodingProgress() {
 }
 
 async function concatAnimatedGIFs() {
-  const image = await GIF.createGif({
+  const image = await createGif({
     transparent: "#FFFFFF",
   })
     .addFrame([
@@ -42,8 +42,8 @@ async function concatAnimatedGIFs() {
   image.toFile("./output/concat.gif");
 }
 
-async function readGif() {
-  const reader = GIF.readGif(sharp("./2.gif", { animated: true }));
+async function testReadGif() {
+  const reader = readGif(sharp("./2.gif", { animated: true }));
   const frames = await reader.toFrames();
   frames.forEach((frame, index) => {
     frame.toFile(`./output/${("000" + index).substr(-4)}.png`);
@@ -59,4 +59,4 @@ async function readGif() {
 // simpleUseCase();
 traceEncodingProgress();
 concatAnimatedGIFs();
-readGif();
+testReadGif();
